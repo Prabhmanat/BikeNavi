@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.bikenavi.R;
 import com.example.bikenavi.authentication.LoginActivity;
+import com.example.bikenavi.authentication.RegistrationActivity;
 
 public class MainActivity extends AppCompatActivity {
 

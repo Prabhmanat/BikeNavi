@@ -53,7 +53,7 @@
         android:layout_above="@id/etPhoneNumber"
         android:layout_marginBottom="24dp"
         android:ems="30"
-        android:hint="@string/first_name"
+        android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -62,7 +62,7 @@
         android:layout_above="@id/btnSignUp"
         android:layout_marginBottom="24dp"
         android:ems="10"
-        android:hint="@string/first_name"
+        android:hint="@string/phone_number"
         android:inputType="phone" />
 
     <Button
@@ -73,6 +73,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:text="@string/sign_up"
+        android:background="@color/bg_startUp"
         android:textAllCaps="false" />
 
 
