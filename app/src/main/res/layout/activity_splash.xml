@@ -4,11 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.8"
-    android:background="@drawable/bg_home"
-    android:backgroundTint="#616161"
-    android:backgroundTintMode="multiply"
-    tools:context=".home.MainActivity">
+    android:background="@color/bg_startUp"
+    tools:context=".home.SplashActivity">
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -19,18 +16,5 @@
         android:contentDescription="@string/app_logo"
         android:scaleType="centerCrop"
         android:src="@drawable/bike_logo" />
-
-    <Button
-        android:id="@+id/btnLogin_SignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp"
-        android:background="@color/bg_startUp"
-        android:elevation="4dp"
-        android:onClick="onLoginClick"
-        android:text="@string/btn_home"
-        android:textAllCaps="false" />
 
 </RelativeLayout>

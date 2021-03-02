@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">BikeNavi</string>
+
+    <!-- string name for logo -->
+    <string name="app_logo">BakeNavi Logo</string>
+
+    <!-- string name for home button text -->
+    <string name="btn_home">Login</string>
+
+    <!-- string name for registrationActivity title text -->
+    <string name="reg_title">Registration</string>
+
+    <!-- string name for FirstName EditText -->
+    <string name="first_name">First Name</string>
+
+    <!-- string name for LastName EditText -->
+    <string name="last_name">Last Name</string>
+
+    <!-- string name for Phone number EditText -->
+    <string name="phone_number">Phone Number</string>
+
+    <!-- string name for Email EditText -->
+    <string name="email">Email</string>
+
+    <!-- string name for SignUp Button text -->
+    <string name="sign_up">SignUp</string>
 </resources>
