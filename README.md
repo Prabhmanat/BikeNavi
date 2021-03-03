@@ -1,6 +1,6 @@
-BikeNavi
-COMP-313 Software Development Project 2
-Team:
+# BikeNavi
+## COMP-313 Software Development Project 2
+### Team:
 Jenit Bilakhia
 Prabh Manat
 Shivangi Shandilya
@@ -9,17 +9,17 @@ Yashwanth Govula
 Priyank Shah
 
 
-How to Run ?
+## How to Run ?
 - install the Application in your Phone:  
 `Create Your Account`
 - to test try connecting with Bluetooth & turning GPS on  
 
-TODO
-Back End
-(Prerequisite) Bluetooth , GPS
+## TODO
+### Back End
+## (Prerequisite) Bluetooth , GPS
 Schema (table) : This is for which tables we need for User Login
 
-Users:
+### Users:
 Hiker 
 Travellor 
 Cardiobiker
