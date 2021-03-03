@@ -71,10 +71,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="@string/sign_up"
+        android:layout_marginBottom="44dp"
         android:background="@color/bg_startUp"
+        android:text="@string/sign_up"
         android:textAllCaps="false" />
-
 
 </RelativeLayout>

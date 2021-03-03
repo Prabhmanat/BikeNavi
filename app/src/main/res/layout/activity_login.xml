@@ -18,13 +18,24 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bike_logo" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/etUserName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:text="@string/login_title"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/etUserName"
         style="@style/AllEditTexts"
         android:layout_above="@id/etPassword"
         android:layout_marginBottom="24dp"
         android:ems="20"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="text" />
 
     <EditText
@@ -33,7 +44,7 @@
         android:layout_above="@id/btnLogin"
         android:layout_marginBottom="24dp"
         android:ems="20"
-        android:hint="Password"
+        android:hint="@string/pwd"
         android:inputType="textPassword" />
 
     <Button
@@ -41,20 +52,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/tvSignUp"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:background="@color/bg_startUp"
-        android:text="Login"
-        android:layout_centerHorizontal="true"
+        android:text="@string/btn_home"
         android:textAllCaps="false" />
 
     <TextView
         android:id="@+id/tvSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an account?Click here to Sign Up"
-        android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="214dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="164dp"
+        android:onClick="onSignUpTextClick"
+        android:text="@string/signUp_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

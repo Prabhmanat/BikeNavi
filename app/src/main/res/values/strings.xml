@@ -10,6 +10,9 @@
     <!-- string name for registrationActivity title text -->
     <string name="reg_title">Registration</string>
 
+    <!-- string name for loginActivity title text -->
+    <string name="login_title">Let\'s Get In...</string>
+
     <!-- string name for FirstName EditText -->
     <string name="first_name">First Name</string>
 
@@ -23,5 +26,14 @@
     <string name="email">Email</string>
 
     <!-- string name for SignUp Button text -->
-    <string name="sign_up">SignUp</string>
+    <string name="sign_up">Sign Up</string>
+
+    <!-- string name for Username text -->
+    <string name="username">Username</string>
+
+    <!-- string name for password text -->
+    <string name="pwd">Password</string>
+
+    <!-- string name for SignUp Button text -->
+    <string name="signUp_text">Don\'t have an account? Click here to Sign Up</string>
 </resources>
