@@ -1,12 +1,12 @@
 # BikeNavi
 ## COMP-313 Software Development Project 2
 ### Team:
-Jenit Bilakhia
-Prabh Manat
-Shivangi Shandilya
-Vaibhav Kumar Joshi
-Yashwanth Govula
-Priyank Shah
+- Jenit Bilakhia
+- Prabh Manat
+- Shivangi Shandilya
+- Vaibhav Kumar Joshi
+- Yashwanth Govula
+- Priyank Shah
 
 
 ## How to Run ?
@@ -17,33 +17,28 @@ Priyank Shah
 ## TODO
 ### Back End
 ## (Prerequisite) Bluetooth , GPS
-Schema (table) : This is for which tables we need for User Login
+- Schema (table) : This is for which tables we need for User Login
 
 ### Users:
-Hiker 
-Travellor 
-Cardiobiker
-Streetbiker 
+- Hiker 
+- Travellor 
+- Cardiobiker
+- Streetbiker 
 
-Service Providers:
-Delivery Service Handler
+- Service Providers:
+- Delivery Service Handler
+ 
+- User SignUp Integration -->
 
-User SignUp Integration -->
+- This will be done through App Installation at (https://play.google.com/)
 
-This will be done through App Installation at (https://play.google.com/)
+- Signup Page 
+- Home Page / UI
+- Tabs
 
-
-Signup Page 
-
-Home Page / UI
-
-Tabs
-
-[ Location Update Page/ Address Page ]
-[ Search Address Page ] 
-(Note #) Functional Connectivity with Devices
-Navigation Functionality 
-
-Destination Update
-
-Disconnect Devices/ Check for Accurate Positioning with Destination
+- [ Location Update Page/ Address Page ]
+- [ Search Address Page ] 
+- (Note #) Functional Connectivity with Devices
+- Navigation Functionality 
+- Destination Update
+- Disconnect Devices/ Check for Accurate Positioning with Destination
