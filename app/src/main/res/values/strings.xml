@@ -28,11 +28,26 @@
     <!-- string name for SignUp Button text -->
     <string name="sign_up">Sign Up</string>
 
-    <!-- string name for Username text -->
-    <string name="username">Username</string>
-
     <!-- string name for password text -->
     <string name="pwd">Password</string>
+
+    <!-- string error text for firstName -->
+    <string name="err_firstName">First Name is Required. </string>
+
+    <!-- string error text for lastName -->
+    <string name="err_lastName">Last Name is Required. </string>
+
+    <!-- string error text for email -->
+    <string name="err_email">Email is Required. </string>
+
+    <!-- string error text for password -->
+    <string name="err_password">Password is Required. </string>
+
+    <!-- string validator text for password -->
+    <string name="valid_password">The length of password should be >= 6 characters. </string>
+
+    <!-- string error text for phone -->
+    <string name="err_phone">Phone Number is Required. </string>
 
     <!-- string name for SignUp Button text -->
     <string name="signUp_text">Don\'t have an account? Click here to Sign Up</string>
