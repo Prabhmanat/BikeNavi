@@ -34,7 +34,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     public void onSendClick(View view) {
         rpfAuth = FirebaseAuth.getInstance();
 
-        rpEmail = findViewById(R.id.etEmail);
+        rpEmail = findViewById(R.id.resetEmail);
         String email = rpEmail.getText().toString().trim();
 
         rpfAuth.sendPasswordResetEmail(email).addOnSuccessListener(aVoid -> {

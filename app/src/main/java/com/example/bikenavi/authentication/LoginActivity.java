@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onSignUpTextClick(View view) {
         startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+        finish();
     }
 
     public void onForgotPasswordTextClick(View view) {

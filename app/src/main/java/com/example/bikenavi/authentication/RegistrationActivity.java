@@ -64,6 +64,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onLoginTextClick(View view) {
         startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+        finish();
     }
 
     public void userValidator(String firstName, String lastName,
@@ -118,6 +119,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             addOnFailureListener(e -> Log.d(TAG, "onFailure: " + e.toString()));
 
                     startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
+                    finish();
 
                 } else {
                     Toast.makeText(RegistrationActivity.this,
