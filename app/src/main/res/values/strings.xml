@@ -28,8 +28,14 @@
     <!-- string name for SignUp Button text -->
     <string name="sign_up">Sign Up</string>
 
+    <!-- string name for Send Button text -->
+    <string name="send">Send</string>
+
     <!-- string name for password text -->
     <string name="pwd">Password</string>
+
+    <!-- string name for my profile text -->
+    <string name="profile">My Profile</string>
 
     <!-- string error text for firstName -->
     <string name="err_firstName">First Name is Required. </string>
@@ -49,6 +55,30 @@
     <!-- string error text for phone -->
     <string name="err_phone">Phone Number is Required. </string>
 
-    <!-- string name for SignUp Button text -->
+    <!-- string text for User created -->
+    <string name="user_success">User successfully created. </string>
+
+    <!-- string text for User error -->
+    <string name="user_error">Error occurred, Please try again! </string>
+
+    <!-- string text for login success -->
+    <string name="login_success">Login successful. </string>
+
+    <!-- string text for login error -->
+    <string name="login_error">Login error, please try again! </string>
+
+    <!-- string text for password email success -->
+    <string name="emailPwd_success">The password reset link has sent successfully. </string>
+
+    <!-- string text for password email error -->
+    <string name="emailPwd_error">Error occurred, please try again!. </string>
+
+    <!-- string name for SignUp text -->
     <string name="signUp_text">Don\'t have an account? Click here to Sign Up</string>
+
+    <!-- string name for forgot password text -->
+    <string name="forgot_password">Forgot password?</string>
+
+    <!-- string name for already a user text -->
+    <string name="already_user">Already a user? Login here</string>
 </resources>

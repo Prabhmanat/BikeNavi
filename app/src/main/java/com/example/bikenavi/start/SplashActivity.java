@@ -1,4 +1,4 @@
-package com.example.bikenavi.home;
+package com.example.bikenavi.start;
 
 import androidx.appcompat.app.AppCompatActivity;
 
