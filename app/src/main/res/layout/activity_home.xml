@@ -19,6 +19,7 @@
         android:onClick="onLogOutClick"/>
 
     <Button
+        android:id="@+id/btnProfile"
         android:layout_below="@id/btnLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,5 +30,18 @@
         android:background="@color/cardview_shadow_start_color"
         android:textAllCaps="false"
         android:onClick="onMyProfileClick"/>
+
+    <Button
+
+        android:layout_below="@id/btnProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/cardview_shadow_start_color"
+        android:textAllCaps="false"
+        android:onClick="onMapClick"/>
 
 </RelativeLayout>

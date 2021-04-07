@@ -12,4 +12,10 @@
 
     <!-- color for startupActivity background -->
     <color name="bg_startUp">#388e3c</color>
+
+    <!-- color for mapbox UI components -->
+    <color name="mapboxWhite">#ffffff</color>
+    <color name="mapboxBlue">#4264fb</color>
+    <color name="mapboxGrayLight">#c6d2e1</color>
+
 </resources>

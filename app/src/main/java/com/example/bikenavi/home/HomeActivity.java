@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.bikenavi.R;
 import com.example.bikenavi.authentication.LoginActivity;
+import com.example.bikenavi.navigation.MapActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
@@ -29,5 +30,9 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onMyProfileClick(View view){
         startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+    }
+
+    public void onMapClick(View view){
+        startActivity(new Intent(HomeActivity.this, MapActivity.class));
     }
 }
