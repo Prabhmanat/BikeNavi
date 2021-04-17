@@ -82,10 +82,26 @@
     <!-- string name for already a user text -->
     <string name="already_user">Already a user? Login here</string>
 
+    <!-- string name for logout -->
+    <string name="logout">Logout</string>
+
     <!-- string name for mapbox access token -->
     <string name="access_token">sk.eyJ1IjoiaWFtc3BkIiwiYSI6ImNrbXpkN3NpYjBjc3Eyb25uZ2s0dTg2eGMifQ.hrj3Om4TL9Vb0IOBV2d24g</string>
 
     <!-- string name for showing permission required text -->
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
+
+    <!-- string name for home screen title -->
+    <string name="home_title">Connect to Light</string>
+
+    <!-- string name for Bluetooth switch  -->
+    <string name="bluetooth_toggle">Bluetooth</string>
+
+    <!-- string name for start navigation  -->
+    <string name="start_navigation">Start Navigation</string>
+
+    <!-- string name for show connected devices button  -->
+    <string name="show_connected">Connected Devices</string>
+
 </resources>

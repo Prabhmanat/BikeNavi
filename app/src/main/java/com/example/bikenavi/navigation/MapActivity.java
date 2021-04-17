@@ -39,7 +39,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,7 +58,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     // widgets
     private MapView mapView;
     private MapboxMap mapboxMap;
-    private NavigationView navigationView;
 
     // initialize navigation
     private Button button;
@@ -64,9 +65,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     // variables
     private String stepDuration;
     private String maneuverInstruction;
-    private String [] timeDuration;
-    private String [] stepInstructions;
-
+    private List<String> timeDuration;
+    private List<String> stepInstructions;
 
     // defining location layers
     private PermissionsManager permissionsManager;
@@ -76,7 +76,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private DirectionsRoute currentRoute;
     private static final String TAG = "DirectionsActivity";
     private NavigationMapRoute navigationMapRoute;
-
 
     // constants
     private static final String SOURCE_ID = "SOURCE_ID";
@@ -90,7 +89,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.activity_map);
 
-        navigationView = findViewById(R.id.navigationView);
+        // navigationView = findViewById(R.id.navigationView);
 
 
         mapView = findViewById(R.id.mapView);
@@ -130,14 +129,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 .shouldSimulateRoute(true)
                                 .build();
 
-                        String geo = options.directionsRoute().geometry();
-                        Log.i(TAG, "Geo" + geo);
-
                         // Call this method with Context from within an Activity
                         NavigationLauncher.startNavigation(MapActivity.this, options);
+
+                        ArrayList<Double> durationInSeconds = new ArrayList<>();
+
+                        for (String duration : timeDuration) {
+                            durationInSeconds.add(Double.parseDouble(duration));
+                            Log.i(TAG, "Duration Array: " + durationInSeconds);
+                        }
+
                         Log.i(TAG, "Options: " + options);
                         Log.i(TAG, "Route: " + currentRoute);
-
 
                     }
                 });
@@ -265,10 +268,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 JSONObject stepsObject = stepsArray.getJSONObject(i);
                                 stepDuration = stepsObject.getString("duration");
 
+                                timeDuration = new ArrayList<>();
+                                timeDuration.add(stepDuration);
+
+                                ArrayList<Double> durationInSeconds = new ArrayList<>();
+
+                                for (String duration : timeDuration) {
+                                    durationInSeconds.add(Double.parseDouble(duration));
+                                    Log.i(TAG, "Duration Array: " + duration);
+                                }
+
                                 Log.v(TAG, "Duration: " + stepDuration);
 
                                 JSONObject maneuverObject = stepsObject.getJSONObject("maneuver");
                                 maneuverInstruction = maneuverObject.getString("instruction");
+
+                                stepInstructions = new ArrayList<>();
+                                stepInstructions.add(maneuverInstruction);
+
+                                for (String instructions : stepInstructions) {
+                                    Log.i(TAG, "Instructions Array: " + instructions);
+                                }
 
                                 Log.v(TAG, "instructions: " + maneuverInstruction);
                             }

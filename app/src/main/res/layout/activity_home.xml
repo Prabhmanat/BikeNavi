@@ -7,41 +7,97 @@
     tools:context=".home.HomeActivity"
     android:background="@color/bg_startUp">
 
-    <Button
-        android:id="@+id/btnLogOut"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        android:minHeight="?attr/actionBarSize"
+        app:titleMarginStart="38dp"
+        android:theme="?attr/actionBarTheme" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@color/cardview_shadow_start_color"
-        android:textAllCaps="false"
-        android:onClick="onLogOutClick"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:text="@android:string/ok"
+        android:layout_below="@id/toolbarHome"
+        android:layout_marginTop="38dp"
+        android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnProfile"
-        android:layout_below="@id/btnLogOut"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+    <TextView
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/profile"
-        android:layout_marginTop="24dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@color/cardview_shadow_start_color"
-        android:textAllCaps="false"
-        android:onClick="onMyProfileClick"/>
+        android:text="@string/home_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
 
-    <Button
+    <ImageView
+        android:id="@+id/imgBluetooth"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/bluetooth_on" />
 
-        android:layout_below="@id/btnProfile"
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/profile"
-        android:layout_marginTop="24dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@color/cardview_shadow_start_color"
+        android:layout_gravity="center"
+        android:text="@string/bluetooth_toggle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_marginTop="12dp"
+        app:switchPadding="12dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/mapboxBlue"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@string/show_connected"
+            android:padding="8dp"
+            android:layout_marginTop="12dp"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/txtConnectedDevices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@android:string/ok"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:text="@string/start_navigation"
         android:textAllCaps="false"
-        android:onClick="onMapClick"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        android:onClick="onClickNavigation" />
+
 
 </RelativeLayout>
