@@ -101,6 +101,9 @@
     <!-- string name for start navigation  -->
     <string name="start_navigation">Start Navigation</string>
 
+    <!-- string name for Bluetooth settings  -->
+    <string name="bluetooth_settings">Bluetooth Settings</string>
+
     <!-- string name for show connected devices button  -->
     <string name="show_connected">Connected Devices</string>
 

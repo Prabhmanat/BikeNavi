@@ -14,15 +14,29 @@
         android:background="@color/purple_500"
         android:minHeight="?attr/actionBarSize"
         app:titleMarginStart="38dp"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme" >
+
+        <ImageView
+            android:id="@+id/bluetoothSettings"
+            android:layout_gravity="end"
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:scaleType="centerCrop"
+            android:onClick="onClickBluetoothSettings"
+            android:tooltipText="@string/bluetooth_settings"
+            android:src="@drawable/bluetooth_settings"
+            android:contentDescription="@string/bluetooth_settings" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
+        android:id="@+id/txtWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
-        android:text="@android:string/ok"
+        tools:text="@android:string/ok"
         android:layout_below="@id/toolbarHome"
         android:layout_marginTop="38dp"
         android:textStyle="bold" />
@@ -34,14 +48,13 @@
         android:layout_centerVertical="true">
 
     <TextView
-        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
 
     <ImageView
         android:id="@+id/imgBluetooth"
@@ -49,7 +62,7 @@
         android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
-        android:src="@drawable/bluetooth_on" />
+        android:contentDescription="@string/bluetooth_toggle" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:layout_width="wrap_content"
@@ -64,22 +77,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/mapboxBlue"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:background="@color/purple_500"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:text="@string/show_connected"
-            android:padding="8dp"
-            android:layout_marginTop="12dp"
+            android:padding="12dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="24dp"
             android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/txtConnectedDevices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@android:string/ok"
+            tools:text="@android:string/ok"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="18dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_gravity="center"

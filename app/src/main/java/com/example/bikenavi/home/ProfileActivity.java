@@ -41,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         documentReference.addSnapshotListener(this, (value, error) -> {
             pFirstName.setText(value.getString("firstName"));
+
             pLastName.setText(value.getString("lastName"));
             pEmail.setText(value.getString("email"));
             pPhone.setText(value.getString("phoneNumber"));
