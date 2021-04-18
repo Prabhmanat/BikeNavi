@@ -72,18 +72,18 @@ public class HomeActivity extends AppCompatActivity {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
-            Toast.makeText(this, getString(R.string.turn_bt_on), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.bt_not_available), Toast.LENGTH_LONG).show();
         }
 
         if (!mBluetoothAdapter.isEnabled()) {
 
-            bluetoothStatusImage.setImageResource(R.drawable.bluetooth_on);
-            Toast.makeText(this, getString(R.string.msg_bt_connected), Toast.LENGTH_LONG).show();
+            bluetoothStatusImage.setImageResource(R.drawable.ic_ring_light);
+            Toast.makeText(this, getString(R.string.connect_ring_light), Toast.LENGTH_LONG).show();
 
         } else {
 
-            bluetoothStatusImage.setImageResource(R.drawable.bluetooth_off);
-            Toast.makeText(this, getString(R.string.turn_bt_on), Toast.LENGTH_LONG).show();
+            bluetoothStatusImage.setImageResource(R.drawable.bluetooth_on);
+            Toast.makeText(this, getString(R.string.bt_already_on), Toast.LENGTH_LONG).show();
         }
 
         mSwitchBluetooth.setOnCheckedChangeListener((compoundButton, isChecked) -> {
@@ -111,18 +111,15 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode) {
-
-            case REQUEST_ENABLE_BT:
-
-                if (resultCode == RESULT_OK) {
-                    // BT is on
-                    bluetoothStatusImage.setImageResource(R.drawable.bluetooth_on);
-                    showToastMessage(getString(R.string.msg_bt_turned_on));
-                } else {
-                    // user denied to turn BT on
-                    showToastMessage(getString(R.string.msg_bt_not_turned_on));
-                }
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == RESULT_OK) {
+                // BT is on
+                bluetoothStatusImage.setImageResource(R.drawable.bluetooth_on);
+                showToastMessage(getString(R.string.msg_bt_turned_on));
+            } else {
+                // user denied to turn BT on
+                showToastMessage(getString(R.string.msg_bt_not_turned_on));
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

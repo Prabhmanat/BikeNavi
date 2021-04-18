@@ -107,8 +107,8 @@
     <!-- string name for show connected devices button  -->
     <string name="show_connected">Connected Devices</string>
 
-    <!-- string name for turn your bluetooth on Toast  -->
-    <string name="turn_bt_on">Please turn your Bluetooth on</string>
+    <!-- string name for bluetooth not available Toast  -->
+    <string name="bt_not_available">Bluetooth is not available</string>
 
     <!-- string name for turning BT on  -->
     <string name="msg_bt_on">Turning Bluetooth on…</string>
@@ -120,13 +120,25 @@
     <string name="msg_bt_not_turned_on">Could not turn Bluetooth on</string>
 
     <!-- string name for turn your bluetooth on Toast  -->
-    <string name="msg_bt_off">Turning Bluetooth off</string>
+    <string name="msg_bt_off">Turning Bluetooth off…</string>
 
     <!-- string name for text connected devices  -->
     <string name="paired_devices">Paired Devices</string>
 
+    <!-- string name for text search location  -->
+    <string name="get_location_screen">Get Location</string>
+
     <!-- string name for turn on BT to get paired devices Toast  -->
     <string name="turn_to_get_device">Turn on the Bluetooth to get paired devices</string>
+
+    <!-- string name for bluetooth is available  -->
+    <string name="bt_available">Bluetooth is available</string>
+
+    <!-- string name for connect to ring light  -->
+    <string name="connect_ring_light">Attach the ring light</string>
+
+    <!-- string name for bluetooth is already on toast  -->
+    <string name="bt_already_on">Bluetooth is already on</string>
 
     <!-- string name for already turned on bluetooth Toast  -->
     <string name="msg_bt_connected">Device is connected already! Check your paired device</string>
