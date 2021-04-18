@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/bluetoothSettings"
             android:layout_width="10dp"
-            android:layout_height="14dp"
+            android:layout_height="16dp"
             android:layout_gravity="end"
             android:contentDescription="@string/bluetooth_settings"
             android:onClick="onClickBluetoothSettings"

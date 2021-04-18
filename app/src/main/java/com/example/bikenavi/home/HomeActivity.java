@@ -2,6 +2,7 @@ package com.example.bikenavi.home;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -26,7 +27,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.List;
 import java.util.Set;
+
+import static android.bluetooth.BluetoothProfile.GATT;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -129,6 +133,12 @@ public class HomeActivity extends AppCompatActivity {
         if (mBluetoothAdapter.isEnabled()) {
 
             mConnectedDevices.setText(getString(R.string.paired_devices));
+
+            BluetoothManager manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
+
+            List<BluetoothDevice> connected = manager.getConnectedDevices(GATT);
+            Log.i("Connected Devices: ", connected.size()+"");
+
             Set<BluetoothDevice> bluetoothDeviceSet = mBluetoothAdapter.getBondedDevices();
 
             for (BluetoothDevice bluetoothDevice : bluetoothDeviceSet) {

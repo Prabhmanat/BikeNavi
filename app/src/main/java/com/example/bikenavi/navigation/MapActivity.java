@@ -219,7 +219,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         getRoute(originPoint, destinationPoint);
         button.setEnabled(true);
-        button.setBackgroundResource(R.color.mapboxBlue);
+        button.setBackgroundResource(R.color.purple_500);
         return true;
     }
 
