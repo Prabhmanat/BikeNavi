@@ -3,6 +3,14 @@ package com.example.bikenavi.navigation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +19,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.bikenavi.R;
+import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothClassicService;
+import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothConfiguration;
+import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothService;
+import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothWriter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mapbox.android.core.permissions.PermissionsListener;
@@ -39,16 +51,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
 import java.lang.reflect.Array;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
 
+import static android.bluetooth.BluetoothProfile.GATT;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
@@ -67,6 +83,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String maneuverInstruction;
     private List<String> timeDuration;
     private List<String> stepInstructions;
+    private ArrayList<Double> durationInSeconds;
+    BluetoothService service;
 
     // defining location layers
     private PermissionsManager permissionsManager;
@@ -95,6 +113,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        //region Description: send data over Bluetooth
+        BluetoothConfiguration config = new BluetoothConfiguration();
+        config.context = getApplicationContext();
+        config.bluetoothServiceClass = BluetoothClassicService.class;
+        config.bufferSize = 1024;
+        config.characterDelimiter = '\n';
+        config.deviceName = "ESP32test";
+        config.callListenersInMainThread = true;
+
+        config.uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); // Required
+
+        BluetoothService.init(config);
+
+        service = BluetoothService.getDefaultInstance();
+        //endregion
+
     }
 
 
@@ -121,74 +156,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 mapboxMap.addOnMapClickListener(MapActivity.this);
                 button = findViewById(R.id.startButton);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        NavigationLauncherOptions options = NavigationLauncherOptions.builder()
-                                .directionsRoute(currentRoute)
-                                .shouldSimulateRoute(true)
-                                .build();
+                button.setOnClickListener(v -> {
+                    NavigationLauncherOptions options = NavigationLauncherOptions.builder()
+                            .directionsRoute(currentRoute)
+                            .shouldSimulateRoute(true)
+                            .build();
 
-                        // Call this method with Context from within an Activity
-                        NavigationLauncher.startNavigation(MapActivity.this, options);
+                    // Call this method with Context from within an Activity
+                    NavigationLauncher.startNavigation(MapActivity.this, options);
 
-                        ArrayList<Double> durationInSeconds = new ArrayList<>();
+                    //ArrayList<Double> durationInSeconds = new ArrayList<>();
 
-                        for (String duration : timeDuration) {
-                            durationInSeconds.add(Double.parseDouble(duration));
-                            Log.i(TAG, "Duration Array: " + durationInSeconds);
-                        }
+                   /* for (String duration : timeDuration) {
+                        durationInSeconds.add(Double.parseDouble(duration));
+                        Log.i(TAG, "Duration Array: " + durationInSeconds);
+                    }*/
 
-                        Log.i(TAG, "Options: " + options);
-                        Log.i(TAG, "Route: " + currentRoute);
+                    Log.i(TAG, "Options: " + options);
+                    Log.i(TAG, "Route: " + currentRoute);
 
-                    }
                 });
             }
         });
-
-        /*mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/mapbox/cjf4m44iw0uza2spb3q0a7s41")
-                .withImage(ICON_ID, BitmapFactory.decodeResource(
-                        NavigationActivity.this.getResources(), R.drawable.mapbox_marker_icon_default))
-                .withSource(new GeoJsonSource(SOURCE_ID,
-                        FeatureCollection.fromFeatures(symbolLayerIconFeatureList)))
-
-                // Adding the actual SymbolLayer to the map style. An offset is added that the bottom of the red
-                // marker icon gets fixed to the coordinate, rather than the middle of the icon being fixed to
-                // the coordinate point. This is offset is not always needed and is dependent on the image
-                // that you use for the SymbolLayer icon.
-
-                .withLayer(new SymbolLayer(LAYER_ID, SOURCE_ID)
-                        .withProperties(
-                                iconImage(ICON_ID),
-                                iconAllowOverlap(true),
-                                iconIgnorePlacement(true)
-                        )
-                ), new Style.OnStyleLoaded() {
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-
-                // Map is set up and the style has loaded. Now you can add additional data or make other map adjustments.
-                enableLocationComponent(style);
-
-                addDestinationIconSymbolLayer(style);
-
-                mapboxMap.addOnMapClickListener(NavigationActivity.this);
-                button = findViewById(R.id.startButton);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean simulateRoute = true;
-                        NavigationLauncherOptions options = NavigationLauncherOptions.builder()
-                                .directionsRoute(currentRoute)
-                                .shouldSimulateRoute(simulateRoute)
-                                .build();
-// Call this method with Context from within an Activity
-                        NavigationLauncher.startNavigation(NavigationActivity.this, options);
-                    }
-                });
-            }
-        });*/
     }
 
     private void addDestinationIconSymbolLayer(@NonNull Style loadedMapStyle) {
@@ -221,6 +210,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         button.setEnabled(true);
         button.setBackgroundResource(R.color.purple_500);
         return true;
+
+
     }
 
     private void getRoute(Point origin, Point destination) {
@@ -229,6 +220,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .origin(origin)
 
                 .destination(destination)
+                .profile("cycling")
                 .build()
                 .getRoute(new Callback<DirectionsResponse>() {
                     @Override
@@ -271,12 +263,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 timeDuration = new ArrayList<>();
                                 timeDuration.add(stepDuration);
 
-                                ArrayList<Double> durationInSeconds = new ArrayList<>();
+                                durationInSeconds = new ArrayList<>();
 
                                 for (String duration : timeDuration) {
                                     durationInSeconds.add(Double.parseDouble(duration));
-                                    Log.i(TAG, "Duration Array: " + duration);
+                                    Log.i(TAG, "Duration Array: " + durationInSeconds);
+
                                 }
+                                Log.i(TAG, "Duration Array: " + durationInSeconds.size());
 
                                 Log.v(TAG, "Duration: " + stepDuration);
 
@@ -296,6 +290,32 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        //region Bluetooth Writer
+                      //  while (); {
+
+                            new java.util.Timer().schedule(
+                                    new java.util.TimerTask() {
+                                        @Override
+                                        public void run() {
+
+                                            BluetoothManager manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
+                                            List<BluetoothDevice> connected = manager.getConnectedDevices(GATT);
+
+                                           // if (connected.size() > 0) {
+                                                BluetoothWriter writer = new BluetoothWriter(service);
+
+                                                for (String instructions : stepInstructions) {
+                                                    writer.writeln(instructions);
+
+                                                }
+                                           // }
+                                        }
+                                    },
+                                    5000
+                            );
+                       // }
+                        //endregion Bluetooth Writer
 
 
                         // Draw the route on the map

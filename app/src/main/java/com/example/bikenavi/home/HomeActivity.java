@@ -134,10 +134,10 @@ public class HomeActivity extends AppCompatActivity {
 
             mConnectedDevices.setText(getString(R.string.paired_devices));
 
-            BluetoothManager manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
+           /* BluetoothManager manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
 
             List<BluetoothDevice> connected = manager.getConnectedDevices(GATT);
-            Log.i("Connected Devices: ", connected.size()+"");
+            Log.i("Connected Devices: ", connected.size()+"");*/
 
             Set<BluetoothDevice> bluetoothDeviceSet = mBluetoothAdapter.getBondedDevices();
 
