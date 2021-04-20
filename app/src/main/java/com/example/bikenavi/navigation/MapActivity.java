@@ -86,11 +86,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Button button;
 
     // variables
-    private String stepDuration;
+    private String stepDuration, stepModifier;
     private String maneuverInstruction;
-    private List<String> timeDuration;
-    private List<String> stepInstructions;
-    private ArrayList<Double> durationInSeconds;
+    private ArrayList<String> timeDuration = new ArrayList<>();
+    private List<String> stepInstructions = new ArrayList<>();
+    private ArrayList<Double> durationInSeconds = new ArrayList<>();
     BluetoothService service;
 
     private BluetoothSocket mBTSocket;
@@ -256,25 +256,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 JSONObject stepsObject = stepsArray.getJSONObject(i);
                                 stepDuration = stepsObject.getString("duration");
 
-                                timeDuration = new ArrayList<>();
-                                timeDuration.add(stepDuration);
 
-                                durationInSeconds = new ArrayList<>();
+                                timeDuration.add(stepDuration);
+                               // durationInSeconds.add(Double.parseDouble(timeDuration));
 
                                 for (String duration : timeDuration) {
-                                    durationInSeconds.add(Double.parseDouble(duration));
+
                                     Log.i(TAG, "Duration Array: " + duration);
 
                                 }
-                                Log.i(TAG, "Duration Array: " + durationInSeconds.size());
-
-                                Log.v(TAG, "Duration: " + stepDuration);
 
                                 JSONObject maneuverObject = stepsObject.getJSONObject("maneuver");
                                 maneuverInstruction = maneuverObject.getString("instruction");
+                                stepModifier = maneuverObject.getString("modifier");
 
-                                stepInstructions = new ArrayList<>();
-                                stepInstructions.add(maneuverInstruction);
+                                stepInstructions.add(stepModifier);
 
                                 for (String instructions : stepInstructions) {
                                     Log.i(TAG, "Instructions Array: " + instructions);
@@ -283,29 +279,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 Log.v(TAG, "instructions: " + maneuverInstruction);
                             }
 
+                            //region new Bluetooth
+                            String instruction = "";
+                            try {
+                                int i = 0;
+                                for (String s : stepInstructions) {
+                                    instruction = s;
+                                    mBTSocket.getOutputStream().write(instruction.getBytes());
+                                    double convertedTime = Double.parseDouble(String.valueOf(timeDuration.get(i))) * 1000;
+                                    long duration = (long) convertedTime;
+                                    Thread.sleep(duration);
+                                    i++;
+
+                                }
+
+                            } catch (InterruptedException | IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            //endregion
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-                        //region new Bluetooth
-                        String instruction = "";
-                        try {
-                            int i = 0;
-                            for (String s : stepInstructions) {
-                                instruction = s;
-                                mBTSocket.getOutputStream().write(instruction.getBytes());
-                                double convertedTime = durationInSeconds.get(i) * 1000;
-                                long duration = (long) convertedTime;
-                                Thread.sleep(duration);
-                                i++;
-
-                            }
-
-                        } catch (InterruptedException | IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        //endregion
 
 
                         // Draw the route on the map
