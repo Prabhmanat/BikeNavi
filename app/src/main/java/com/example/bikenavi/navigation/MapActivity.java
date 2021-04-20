@@ -3,6 +3,7 @@ package com.example.bikenavi.navigation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -19,6 +20,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.bikenavi.R;
+import com.example.bikenavi.SingleToneClass;
+import com.example.bikenavi.home.HomeActivity;
 import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothClassicService;
 import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothConfiguration;
 import com.github.douglasjunior.bluetoothclassiclibrary.BluetoothService;
@@ -52,12 +55,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,6 +93,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ArrayList<Double> durationInSeconds;
     BluetoothService service;
 
+    private BluetoothSocket mBTSocket;
+    SingleToneClass obj;
+
     // defining location layers
     private PermissionsManager permissionsManager;
     private LocationComponent locationComponent;
@@ -107,31 +117,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.activity_map);
 
-        // navigationView = findViewById(R.id.navigationView);
+        // mBTSocket = obj.getData();
 
+        mBTSocket = HomeActivity.getData();
+
+        // navigationView = findViewById(R.id.navigationView);
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        //region Description: send data over Bluetooth
-        BluetoothConfiguration config = new BluetoothConfiguration();
-        config.context = getApplicationContext();
-        config.bluetoothServiceClass = BluetoothClassicService.class;
-        config.bufferSize = 1024;
-        config.characterDelimiter = '\n';
-        config.deviceName = "ESP32test";
-        config.callListenersInMainThread = true;
-
-        config.uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); // Required
-
-        BluetoothService.init(config);
-
-        service = BluetoothService.getDefaultInstance();
-        //endregion
-
     }
-
 
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
@@ -267,7 +263,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                                 for (String duration : timeDuration) {
                                     durationInSeconds.add(Double.parseDouble(duration));
-                                    Log.i(TAG, "Duration Array: " + durationInSeconds);
+                                    Log.i(TAG, "Duration Array: " + duration);
 
                                 }
                                 Log.i(TAG, "Duration Array: " + durationInSeconds.size());
@@ -291,31 +287,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             e.printStackTrace();
                         }
 
-                        //region Bluetooth Writer
-                      //  while (); {
+                        //region new Bluetooth
+                        String instruction = "";
+                        try {
+                            int i = 0;
+                            for (String s : stepInstructions) {
+                                instruction = s;
+                                mBTSocket.getOutputStream().write(instruction.getBytes());
+                                double convertedTime = durationInSeconds.get(i) * 1000;
+                                long duration = (long) convertedTime;
+                                Thread.sleep(duration);
+                                i++;
 
-                            new java.util.Timer().schedule(
-                                    new java.util.TimerTask() {
-                                        @Override
-                                        public void run() {
+                            }
 
-                                            BluetoothManager manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
-                                            List<BluetoothDevice> connected = manager.getConnectedDevices(GATT);
+                        } catch (InterruptedException | IOException e) {
+                            e.printStackTrace();
+                        }
 
-                                           // if (connected.size() > 0) {
-                                                BluetoothWriter writer = new BluetoothWriter(service);
-
-                                                for (String instructions : stepInstructions) {
-                                                    writer.writeln(instructions);
-
-                                                }
-                                           // }
-                                        }
-                                    },
-                                    5000
-                            );
-                       // }
-                        //endregion Bluetooth Writer
+                        //endregion
 
 
                         // Draw the route on the map
@@ -355,7 +345,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
