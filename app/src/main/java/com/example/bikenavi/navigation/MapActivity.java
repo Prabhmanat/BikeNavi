@@ -61,9 +61,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -87,8 +92,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Button button;
 
     // variables
-    private int i =0;
-    private Runnable runnable;
+    private int i = 0;
     private String stepDuration, stepModifier;
     private String maneuverInstruction;
     private ArrayList<String> timeDuration = new ArrayList<>();
@@ -112,6 +116,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String SOURCE_ID = "SOURCE_ID";
     private static final String ICON_ID = "ICON_ID";
     private static final String LAYER_ID = "LAYER_ID";
+
 
 
     @Override
@@ -282,41 +287,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 Log.v(TAG, "instructions: " + maneuverInstruction);
                             }
 
-                            //region new Bluetooth
-
-                            runnable = new Runnable() {
-
+                            new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // This method will be executed in the future
-                                    String instruction = "";
-                                    for (String s : stepInstructions) {
-                                        instruction = s;
-                                       // mBTSocket.getOutputStream().write(instruction.getBytes());
-                                        handleHandler();
-
-                                    }
-
-
+                                    i=0;
+                                    for (String s : stepInstructions)
+                                        try {
+                                            mBTSocket.getOutputStream().write(s.getBytes());
+                                            double convertedTime = Double.parseDouble(String.valueOf(timeDuration.get(i))) * 1000/4;
+                                            long duration = (long) convertedTime;
+                                            i++;
+                                            Thread.sleep(duration);
+                                        } catch (IOException | InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
                                 }
-                            };
-
-
-
-
-
-
-
-
-
-                            //endregion
-
+                            }).start();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                         // Draw the route on the map
                         if (navigationMapRoute != null) {
                             navigationMapRoute.removeRoute();
@@ -325,16 +315,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                         navigationMapRoute.addRoute(currentRoute);
                     }
-
-                    public void handleHandler() {
-                        Handler handler = new Handler();
-                        double convertedTime = Double.parseDouble(String.valueOf(timeDuration.get(i))) * 1000;
-                        long duration = (long) convertedTime;
-                        i++;
-                        // Execute the Runnable in 500 milliseconds
-                        handler.postDelayed(runnable, duration);
-                    }
-
 
                     @Override
                     public void onFailure(Call<DirectionsResponse> call, Throwable throwable) {
