@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -86,6 +87,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Button button;
 
     // variables
+    private int i =0;
+    private Runnable runnable;
     private String stepDuration, stepModifier;
     private String maneuverInstruction;
     private ArrayList<String> timeDuration = new ArrayList<>();
@@ -280,24 +283,34 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             }
 
                             //region new Bluetooth
-                            String instruction = "";
-                            try {
-                                int i = 0;
-                                for (String s : stepInstructions) {
-                                    instruction = s;
-                                    mBTSocket.getOutputStream().write(instruction.getBytes());
-                                    double convertedTime = Double.parseDouble(String.valueOf(timeDuration.get(i))) * 1000;
-                                    long duration = (long) convertedTime;
-                                    Thread.sleep(duration);
-                                    i++;
+
+                            runnable = new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    // This method will be executed in the future
+                                    String instruction = "";
+                                    for (String s : stepInstructions) {
+                                        instruction = s;
+                                       // mBTSocket.getOutputStream().write(instruction.getBytes());
+                                        handleHandler();
+
+                                    }
+
 
                                 }
+                            };
 
-                            } catch (InterruptedException | IOException e) {
-                                e.printStackTrace();
-                            }
+
+
+
+
+
+
+
 
                             //endregion
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -313,12 +326,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         navigationMapRoute.addRoute(currentRoute);
                     }
 
+                    public void handleHandler() {
+                        Handler handler = new Handler();
+                        double convertedTime = Double.parseDouble(String.valueOf(timeDuration.get(i))) * 1000;
+                        long duration = (long) convertedTime;
+                        i++;
+                        // Execute the Runnable in 500 milliseconds
+                        handler.postDelayed(runnable, duration);
+                    }
+
+
                     @Override
                     public void onFailure(Call<DirectionsResponse> call, Throwable throwable) {
                         Log.e(TAG, "Error: " + throwable.getMessage());
                     }
                 });
     }
+
+
+
+
 
     @SuppressWarnings({"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
